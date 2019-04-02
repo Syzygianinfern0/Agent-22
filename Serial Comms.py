@@ -1,5 +1,5 @@
 import serial
-port = "/dev/rfcomm0"
+port = "COM4"
 bt = serial.Serial(port, 9600)
 print("connected")
 bt.flushInput()
@@ -11,10 +11,10 @@ while(1):
 
     input_d = bt.readline()
     input_d = input_d.decode()
-    input_d.strip('\n')
-
-    if input_d is not '0' or input_d is not '1':
-        print('junk : {} {}', format(input_d, type(input_d)))
+    input_d.rstrip()
+    print('\'' + input_d + '\'')
+    if input_d != '0' or input_d != '1':
+        print('junk : {} {}'.format(input_d, str(type(input_d))))
         continue
     # # print(len(mesg))
     # if(input_d != prev):
