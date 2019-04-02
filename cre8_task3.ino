@@ -60,7 +60,7 @@ int main()
     x = ADC_Read(0);
     y = ADC_Read(1);
     z = ADC_Read(2);
-   /* usart_write("\nx= ");
+    /* usart_write("\nx= ");
     usart_write((String)x);
     usart_write("\ty= ");
     usart_write((String)y);
