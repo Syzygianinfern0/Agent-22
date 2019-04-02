@@ -1,4 +1,5 @@
 import serial
+import re
 port = "COM4"
 bt = serial.Serial(port, 9600)
 print("connected")
@@ -11,23 +12,23 @@ while(1):
 
     input_d = bt.readline()
     input_d = input_d.decode()
-    input_d.rstrip()
-    print('\'' + input_d + '\'')
-    if input_d != '0' or input_d != '1':
+    input_d = re.sub(r'\s+', '', input_d)
+
+    if (input_d != '0') and (input_d != '1') and(input_d != 'IDLE'):            #junk case
         print('junk : {} {}'.format(input_d, str(type(input_d))))
         continue
-    # # print(len(mesg))
-    # if(input_d != prev):
-    #     print(input_d)
 
-    # if len(mesg) == 8:
-    #     print("\n\n The conversion for now is : {}".format(int(mesg, 2)))
-    #     mesg = ''
-    # else:
-    #     mesg = mesg + input_d
-    #     print(mesg)
+    if(input_d == prev):                                                        #debounce
+        continue
 
-    #   # ctrl c to stop
+    if len(mesg) == 8:                                                          # now 8 bits
+        print("\n\n The conversion for now is : {}".format(int(mesg, 2)))
+        mesg = ''
 
-    # prev = input_d
-    print(input_d)
+    elif(input_d != 'IDLE'):                                                    #if 0 or 1
+        mesg = mesg + input_d
+        print(mesg)
+
+      # ctrl c to stop
+
+    prev = input_d
