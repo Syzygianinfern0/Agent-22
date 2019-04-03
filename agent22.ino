@@ -1,7 +1,5 @@
-// #include <avr/iom328p.h>
 #include <avr/io.h>
 #include <avr/interrupt.h>
-
 volatile int k = 0;
 ISR(TIMER0_OVF_vect)
 {
@@ -60,7 +58,7 @@ int main()
     x = ADC_Read(0);
     y = ADC_Read(1);
     z = ADC_Read(2);
-    /* usart_write("\nx= ");
+   /* usart_write("\nx= ");
     usart_write((String)x);
     usart_write("\ty= ");
     usart_write((String)y);
@@ -72,6 +70,10 @@ int main()
       usart_write("\nIDLE");
     }*/
     dlay(0.01);
+    if (y <= 380 && y >= 330)
+    {
+      usart_write("\nIDLE");
+    }
     if (y <= 420 && y >= 389)
     {
       usart_write("\n1");
